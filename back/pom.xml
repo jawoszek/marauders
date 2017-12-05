@@ -5,8 +5,34 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kawiory</groupId>
-    <artifactId>marauders</artifactId>
+    <artifactId>marauders-back</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <name>marauders-back</name>
+    <description>Marauders spring-boot server</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.8.RELEASE</version>
+    </parent>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

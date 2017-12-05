@@ -1,0 +1,7 @@
+#name:level:cost<name,value;>:requirements;<name,level>
+City Hall:1:Wood,1000;Stone,50;Gold,0:
+City Hall:2:Wood,2000;Stone,100;Gold,0:
+City Hall:3:Wood,5000;Stone,200;Gold,0:
+City Hall:4:Wood,5000;Stone,500;Gold,5:
+City Hall:5:Wood,5000;Stone,1000;Gold,10:
+City Hall:6:Wood,10000;Stone,1000;Gold,20:
