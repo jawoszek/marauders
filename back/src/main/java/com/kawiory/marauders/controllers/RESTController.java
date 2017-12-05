@@ -1,15 +1,19 @@
 package com.kawiory.marauders.controllers;
 
+import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Constants;
 import com.kawiory.marauders.game.Game;
 import com.kawiory.marauders.game.PlayerData;
 import com.kawiory.marauders.game.army.Army;
 import com.kawiory.marauders.game.city.City;
+import com.kawiory.marauders.game.engine.GameCommandsQueue;
 import io.vavr.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author Kacper
@@ -21,9 +25,20 @@ public class RESTController {
     @Autowired
     private Constants constants;
 
-    @RequestMapping(value = "/hi", method = RequestMethod.GET)
-    public Game hi(){
-        return getExample();
+    @Autowired
+    private Blob blob;
+
+    @Autowired
+    private GameCommandsQueue gameCommandsQueue;
+
+    @RequestMapping(value = "/blob", method = RequestMethod.GET)
+    public Blob blob(){
+        return blob;
+    }
+
+    @RequestMapping(value = "/games", method = RequestMethod.GET)
+    public Map<String, Game> games(){
+        return blob.getGames();
     }
 
     @RequestMapping(value = "/constants", method = RequestMethod.GET)
@@ -31,7 +46,7 @@ public class RESTController {
         return constants;
     }
 
-    private static Game getExample(){
+    public static Game getExample(){
         String skarbnik = "Skarbnik";
         String rudy = "Rudy";
 
@@ -52,7 +67,7 @@ public class RESTController {
         city1.setOwnerName(skarbnik);
 
         city2.getBuildings().put("City Hall", 3);
-        city2.getBuildings().put("Farm", 12);
+        city2.getBuildings().put("Farm", 8);
         city2.getGarrison().getArmies().put(rudy, army3);
         city2.setOwnerName(rudy);
 

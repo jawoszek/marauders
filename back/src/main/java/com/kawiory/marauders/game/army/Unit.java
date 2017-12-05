@@ -1,10 +1,13 @@
 package com.kawiory.marauders.game.army;
 
+import com.kawiory.marauders.game.city.Requirements;
+
+import java.util.Map;
+
 /**
  * @author Kacper
  */
-public enum Unit {
-    LEVY ("Levy", 1, 1, 5, 4, 0);
+public class Unit {
 
     private final String name;
     private final int attack;
@@ -13,13 +16,20 @@ public enum Unit {
     private final int position;
     private final int range;
 
-    Unit(String name, int attack, int defense, int speed, int position, int range) {
+    private final Map<String, Integer> resourcesPerSecond;
+    private final Map<String, Integer> costs;
+    private final Requirements requirements;
+
+    public Unit(String name, int attack, int defense, int speed, int position, int range, Map<String, Integer> resourcesPerSecond, Map<String, Integer> costs, Requirements requirements) {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
         this.position = position;
         this.range = range;
+        this.resourcesPerSecond = resourcesPerSecond;
+        this.costs = costs;
+        this.requirements = requirements;
     }
 
     public String getName() {
@@ -44,5 +54,17 @@ public enum Unit {
 
     public int getRange() {
         return range;
+    }
+
+    public Map<String, Integer> getResourcesPerSecond() {
+        return resourcesPerSecond;
+    }
+
+    public Map<String, Integer> getCosts() {
+        return costs;
+    }
+
+    public Requirements getRequirements() {
+        return requirements;
     }
 }

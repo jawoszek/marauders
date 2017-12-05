@@ -3,15 +3,10 @@ package com.kawiory.marauders.game.resource;
 /**
  * @author Kacper
  */
-public enum Resource {
-    FOOD ("Food"),
-    WOOD ("Wood"),
-    STONE ("Stone"),
-    GOLD ("Gold");
-
+public class Resource {
     private final String name;
 
-    Resource(String name) {
+    public Resource(String name) {
         this.name = name;
     }
 
