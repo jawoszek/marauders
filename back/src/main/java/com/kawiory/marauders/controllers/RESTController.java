@@ -31,17 +31,17 @@ public class RESTController {
     @Autowired
     private GameCommandsQueue gameCommandsQueue;
 
-    @RequestMapping(value = "/blob", method = RequestMethod.GET)
+    @RequestMapping(value = "/restBlob", method = RequestMethod.GET)
     public Blob blob(){
         return blob;
     }
 
-    @RequestMapping(value = "/games", method = RequestMethod.GET)
+    @RequestMapping(value = "/restGames", method = RequestMethod.GET)
     public Map<String, Game> games(){
         return blob.getGames();
     }
 
-    @RequestMapping(value = "/constants", method = RequestMethod.GET)
+    @RequestMapping(value = "/restConstants", method = RequestMethod.GET)
     public Constants constants(){
         return constants;
     }

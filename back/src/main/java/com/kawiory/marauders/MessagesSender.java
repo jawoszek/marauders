@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessagesSender {
 
-    private static final String CHANNEL = "/blob";
+    private static final String CHANNEL = "/queue/messages";
 
     private final Blob blob;
     private final SimpMessagingTemplate template;
