@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessagesSender {
 
-    private static final String CHANNEL = "/queue/messages";
+    private static final String BLOB_CHANNEL = "/queue/blob";
 
     private final Blob blob;
     private final SimpMessagingTemplate template;
@@ -31,7 +31,7 @@ public class MessagesSender {
                                 .keySet()
                                 .stream())
                 .distinct()
-                .forEach(user -> sendBlob(user, CHANNEL, blob));
+                .forEach(user -> sendBlob(user, BLOB_CHANNEL, blob));
 
     }
 
