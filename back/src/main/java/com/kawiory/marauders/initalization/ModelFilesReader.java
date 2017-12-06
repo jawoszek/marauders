@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static java.lang.System.lineSeparator;
-
 /**
  * @author Kacper
  */
@@ -22,7 +20,7 @@ public class ModelFilesReader {
     public Stream<String[]> readFile(String fileName) {
         return Arrays
                 .stream(
-                        readResource(fileName).split(lineSeparator()))
+                        readResource(fileName).split("\n"))
                 .filter(
                         line -> !line.startsWith("#"))
                 .map(
