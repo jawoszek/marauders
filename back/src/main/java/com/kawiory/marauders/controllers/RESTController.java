@@ -5,7 +5,7 @@ import com.kawiory.marauders.game.Constants;
 import com.kawiory.marauders.game.Game;
 import com.kawiory.marauders.game.PlayerData;
 import com.kawiory.marauders.game.army.Army;
-import com.kawiory.marauders.game.city.City;
+import com.kawiory.marauders.game.location.City;
 import com.kawiory.marauders.game.engine.GameCommandsQueue;
 import io.vavr.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;

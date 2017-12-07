@@ -1,6 +1,6 @@
 package com.kawiory.marauders.game.army;
 
-import com.kawiory.marauders.game.city.Requirements;
+import com.kawiory.marauders.game.location.Requirements;
 
 import java.util.Map;
 

@@ -154,7 +154,8 @@ public class Operations {
                 .put(buildingName, buildingLevel);
     }
 
-    public void addArmy(Map<String, Integer> units, String userName, String gameName, Tuple coordinates) {
+    public void addArmy(Map<String, Integer> units, String userName, String gameName, Tuple coordinates,
+                        Tuple sourceCoordinates) {
         units.forEach(
                 (unit, amount) ->
                         blob.getGames()

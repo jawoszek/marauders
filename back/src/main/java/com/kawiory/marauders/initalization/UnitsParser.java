@@ -1,12 +1,12 @@
 package com.kawiory.marauders.initalization;
 
 import com.kawiory.marauders.game.army.Unit;
-import com.kawiory.marauders.game.city.Requirements;
+import com.kawiory.marauders.game.location.Requirements;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.kawiory.marauders.game.city.Requirements.emptyRequirements;
+import static com.kawiory.marauders.game.location.Requirements.emptyRequirements;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 

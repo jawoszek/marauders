@@ -1,7 +1,7 @@
 package com.kawiory.marauders.game;
 
 import com.kawiory.marauders.game.army.Unit;
-import com.kawiory.marauders.game.city.Building;
+import com.kawiory.marauders.game.location.Building;
 import com.kawiory.marauders.game.resource.Resource;
 
 import java.util.Map;

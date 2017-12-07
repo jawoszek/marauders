@@ -62,7 +62,7 @@ public class RecruitTask implements Runnable {
 
         operations.useResources(operations.getUnitsCosts(armyToRecruit), userName, gameName);
         gameCommandsQueue.executeWithDelay(
-                () -> operations.addArmy(armyToRecruit, userName, gameName, cityCoordinates),
+                () -> operations.addArmy(armyToRecruit, userName, gameName, cityCoordinates, null),
                 RECRUIT_TIME
         );
     }

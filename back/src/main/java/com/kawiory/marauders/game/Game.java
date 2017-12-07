@@ -1,6 +1,6 @@
 package com.kawiory.marauders.game;
 
-import com.kawiory.marauders.game.city.City;
+import com.kawiory.marauders.game.location.City;
 import io.vavr.Tuple;
 
 import java.util.HashMap;

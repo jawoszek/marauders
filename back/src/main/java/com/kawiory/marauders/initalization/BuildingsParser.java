@@ -1,6 +1,6 @@
 package com.kawiory.marauders.initalization;
 
-import com.kawiory.marauders.game.city.Building;
+import com.kawiory.marauders.game.location.Building;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 

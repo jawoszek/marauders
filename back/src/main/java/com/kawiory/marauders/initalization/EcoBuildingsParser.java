@@ -1,16 +1,15 @@
 package com.kawiory.marauders.initalization;
 
 import com.google.common.collect.ImmutableMap;
-import com.kawiory.marauders.game.city.Building;
-import com.kawiory.marauders.game.city.BuildingLevel;
-import com.kawiory.marauders.game.city.Requirements;
+import com.kawiory.marauders.game.location.Building;
+import com.kawiory.marauders.game.location.BuildingLevel;
+import com.kawiory.marauders.game.location.Requirements;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static com.kawiory.marauders.game.city.Requirements.emptyRequirements;
+import static com.kawiory.marauders.game.location.Requirements.emptyRequirements;
 import static java.lang.Integer.parseInt;
 
 /**

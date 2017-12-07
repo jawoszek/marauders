@@ -2,7 +2,7 @@ package com.kawiory.marauders.initalization;
 
 import com.kawiory.marauders.game.Constants;
 import com.kawiory.marauders.game.army.Unit;
-import com.kawiory.marauders.game.city.Building;
+import com.kawiory.marauders.game.location.Building;
 import com.kawiory.marauders.game.resource.Resource;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;

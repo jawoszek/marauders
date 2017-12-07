@@ -1,4 +1,4 @@
-package com.kawiory.marauders.game.city;
+package com.kawiory.marauders.game.location;
 
 import com.kawiory.marauders.game.army.Garrison;
 

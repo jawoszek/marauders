@@ -3,7 +3,7 @@ package com.kawiory.marauders.game.engine;
 import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Game;
 import com.kawiory.marauders.game.PlayerData;
-import com.kawiory.marauders.game.city.City;
+import com.kawiory.marauders.game.location.City;
 
 /**
  * @author Kacper

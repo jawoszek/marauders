@@ -65,7 +65,7 @@ public class MoveTask implements Runnable {
 
         operations.removeUnits(armyToSend, userName, gameName, sourceCoordinates);
         gameCommandsQueue.executeWithDelay(
-                () -> operations.addArmy(armyToSend, userName, gameName, targetCoordinates),
+                () -> operations.addArmy(armyToSend, userName, gameName, targetCoordinates, sourceCoordinates),
                 MOVE_TIME
         );
     }
