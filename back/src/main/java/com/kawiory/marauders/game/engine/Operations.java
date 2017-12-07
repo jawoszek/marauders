@@ -88,7 +88,7 @@ public class Operations {
                                 .getPlayersData()
                                 .get(userName)
                                 .getResourcesOwned()
-                                .get(resourcesToCheck.getKey()) >= resourcesToCheck.getValue()
+                                .getOrDefault(resourcesToCheck.getKey(), 0) >= resourcesToCheck.getValue()
                 );
     }
 
@@ -118,7 +118,7 @@ public class Operations {
                                         .getArmies()
                                         .get(userName)
                                         .getUnits()
-                                        .get(unitsToCheck.getKey()) >= unitsToCheck.getValue()
+                                        .getOrDefault(unitsToCheck.getKey(), 0) >= unitsToCheck.getValue()
                 );
     }
 

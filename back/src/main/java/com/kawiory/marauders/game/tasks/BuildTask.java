@@ -42,6 +42,7 @@ public class BuildTask implements Runnable {
         try {
             runTask();
         } catch (Exception e) {
+            e.printStackTrace();
             gameCommandsQueue.execute(() -> messagesSender.sendToUser(userName, FAKAP));
         }
     }

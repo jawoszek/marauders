@@ -1,7 +1,6 @@
 package com.kawiory.marauders.controllers;
 
 import com.kawiory.marauders.MessagesSender;
-import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.commands.Build;
 import com.kawiory.marauders.game.commands.Move;
 import com.kawiory.marauders.game.commands.Recruit;
@@ -39,6 +38,7 @@ public class WebSocketController {
 
     @MessageMapping("/commands/build")
     public void build(Message<Object> message, @Payload Build command) throws Exception {
+        System.out.println("HEY");
         gameCommandsQueue.execute(command.convert(getUserName(message), operations, gameCommandsQueue, messagesSender));
     }
 
