@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class MessagesSender {
 
     private static final String BLOB_CHANNEL = "/queue/blob";
+    private static final String MESSAGE_CHANNEL = "/queue/messages";
 
     private final Blob blob;
     private final SimpMessagingTemplate template;
@@ -19,6 +20,10 @@ public class MessagesSender {
     public MessagesSender(Blob blob, SimpMessagingTemplate template) {
         this.blob = blob;
         this.template = template;
+    }
+
+    public void sendToUser(String userName, String message){
+        template.convertAndSendToUser(userName, MESSAGE_CHANNEL, message);
     }
 
     public void sendToAll() {

@@ -1,2 +1,4 @@
-#Name:stats:costs:maintenancePerMin:requirements
-Levy:1,1,1,1,1:Food,50;Wood,10:Food,1:
+#Name:stats(att/def/sp/pos/ran):costs:maintenancePerMin:requirements
+Levy:1,2,6,5,1:Food,50;Wood,10:Food,1:
+Spearman:5,3,5,6,2:Food,40;Wood,40:Food,2:
+Archer:10,1,1,2,10:Food,50;Wood,80:Food,4:

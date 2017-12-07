@@ -4,6 +4,8 @@ import com.kawiory.marauders.controllers.RESTController;
 import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Constants;
 import com.kawiory.marauders.game.Game;
+import com.kawiory.marauders.game.engine.GameCommandsQueue;
+import com.kawiory.marauders.game.engine.Operations;
 import com.kawiory.marauders.initalization.InitializationService;
 import com.kawiory.marauders.player.Player;
 import org.springframework.context.annotation.Bean;

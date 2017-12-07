@@ -4,13 +4,11 @@ import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Game;
 import com.kawiory.marauders.game.PlayerData;
 import com.kawiory.marauders.game.city.City;
-import org.springframework.stereotype.Service;
 
 /**
  * @author Kacper
  */
 
-@Service
 public class ResourcesGathering implements Runnable {
 
     private final Blob blob;
