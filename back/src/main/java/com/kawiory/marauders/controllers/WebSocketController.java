@@ -38,7 +38,6 @@ public class WebSocketController {
 
     @MessageMapping("/commands/build")
     public void build(Message<Object> message, @Payload Build command) throws Exception {
-        System.out.println("HEY");
         gameCommandsQueue.execute(command.convert(getUserName(message), operations, gameCommandsQueue, messagesSender));
     }
 

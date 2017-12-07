@@ -36,7 +36,7 @@ public class Operations {
                 .getCitiesOnMap()
                 .get(coordinates)
                 .getBuildings()
-                .getOrDefault(buildingName, 0) == buildingLevel - 1;
+                .getOrDefault(buildingName, 0) == buildingLevel;
     }
 
     public Map<String, Integer> getBuildingCosts(String buildingName, int buildingLevel) {
@@ -79,6 +79,7 @@ public class Operations {
     }
 
     public boolean hasResources(Map<String, Integer> resources, String userName, String gameName) {
+        System.out.println("has res");
         return resources
                 .entrySet()
                 .stream()
