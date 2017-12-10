@@ -79,7 +79,6 @@ public class Operations {
     }
 
     public boolean hasResources(Map<String, Integer> resources, String userName, String gameName) {
-        System.out.println("has res");
         return resources
                 .entrySet()
                 .stream()

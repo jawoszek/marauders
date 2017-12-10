@@ -33,7 +33,7 @@ public class WebSocketController {
 
     @MessageMapping("/commands")
     public void commands(Message<Object> message, @Payload Object command) throws Exception {
-        System.out.println("commands");
+
     }
 
     @MessageMapping("/commands/build")
