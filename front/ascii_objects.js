@@ -41,6 +41,13 @@ var backButton = [
     "\\   ___|",
     " \\]|    "];
 
+var militaryPanelButton = [
+    "/ \\       / \\",
+    "| |       | |___",
+    "| |wwwwwww| |   \\",
+    "| |   _   | |___/",
+    "| |  |#|  | |"];
+
 var city1 = [
     "                                                                                ",
     "       /\\                                             _                         ",
@@ -218,7 +225,7 @@ var cityOnMap = [
     " |[]| |D| |  | "];
 
 
-var cityOnMap2= [
+var cityOnMap2 = [
     "``   ````` *  `",
     "``   `````/.\\ `",
     "` /\\ ```` |M|  `",

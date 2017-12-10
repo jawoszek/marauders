@@ -1,4 +1,4 @@
-var SPAN_END = "</span>"
+var SPAN_END = "</span>";
 function asciiObjsToTable(background,asciiObjects){
 	yLen = background.length;
 	xLen = background[0].length;

@@ -11,6 +11,8 @@ public class Garrison {
 
     public Garrison() {
         this.armies = new HashMap<>();
+        armies.put("Rudy", new Army());
+        armies.put("Skarbnik", new Army());
     }
 
     public Map<String, Army> getArmies() {

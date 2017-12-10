@@ -45,7 +45,7 @@ public class GameCommandsQueue {
     }
 
     public void executeWithDelay(Runnable task, long delay) {
-        eventTimer.schedule(getTimerTask(task), delay);
+        eventTimer.schedule(getTimerTask(() -> execute(task)), delay);
     }
 
     private TimerTask getTimerTask(Runnable task) {

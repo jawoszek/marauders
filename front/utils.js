@@ -15,9 +15,15 @@ var build_form=[
     "|           ___   __               |",
     "|   BUILD  [YES]/[NO]              |",
     "\\==================================/"];
-var militaryTab=[
+var garrisonTab=[
     "/===============================\\",
     "|         GARRISON              |",
+    "|             :              [R]|",
+    "\\===============================/"];
+
+var militaryTab=[
+    "/===============================\\",
+    "|           UNITS               |",
     "|             :              [R]|",
     "\\===============================/"];
 var xResourceOfset =7;
@@ -65,6 +71,14 @@ function generateBuildForm(food,wood,stone,gold){
     res[5] = res[5].slice(0,xResourceOfset)+goldStr+res[5].slice(xResourceOfset+goldStr.length,res[5].length);
     return res;
 }
+
+function generateGarrisonForm(){
+    var res = new Array(garrisonTab.length)
+    for(var i=0 ; i<garrisonTab.length ; i++)
+        res[i] = garrisonTab[i];
+    return res;
+}
+
 function generateMilitaryForm(){
     var res = new Array(militaryTab.length)
     for(var i=0 ; i<militaryTab.length ; i++)

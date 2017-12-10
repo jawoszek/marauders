@@ -29,3 +29,7 @@ function getUnits(gameState,cityCoords,playerID){
     if(!playerArmy) return;
     return playerArmy.units;
 }
+
+function getAllUnits(gameState){
+    return gameState.constants.units;
+}
