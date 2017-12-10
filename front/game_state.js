@@ -1,12 +1,12 @@
 function updateGameState(){
     var gameState = gameStateMock;
-    if(!(gameState.games["1"]).citiesOnMap || !(gameState.games["1"]).playersData)
+    if(!(gameState.games["1"]).locationsOnMap || !(gameState.games["1"]).playersData)
         return;
     return gameState;
 }
 
 function getCity(gameState,coords){
-    var cities = (gameState.games["1"]).citiesOnMap;
+    var cities = (gameState.games["1"]).locationsOnMap;
     for(cityCoord in cities){
         if(coords == cityCoord)
             return cities[cityCoord]
@@ -23,7 +23,7 @@ var gameStateMock={
     }
 };
 function getUnits(gameState,cityCoords,playerID){
-    var city = (gameState.games["1"]).citiesOnMap[cityCoords];
+    var city = (gameState.games["1"]).locationsOnMap[cityCoords];
     if(!city) return;
     var playerArmy= city.garrison.armies[playerID];
     if(!playerArmy) return;

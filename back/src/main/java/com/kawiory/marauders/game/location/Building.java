@@ -8,15 +8,21 @@ import java.util.Map;
 public class Building {
 
     private final String name;
+    private final boolean cityBuilding;
     private final Map<Integer, BuildingLevel> levels;
 
-    public Building(String name, Map<Integer, BuildingLevel> levels) {
+    public Building(String name, boolean cityBuilding, Map<Integer, BuildingLevel> levels) {
         this.name = name;
+        this.cityBuilding = cityBuilding;
         this.levels = levels;
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isCityBuilding() {
+        return cityBuilding;
     }
 
     public Map<Integer, BuildingLevel> getLevels() {

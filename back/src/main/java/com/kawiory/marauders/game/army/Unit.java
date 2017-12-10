@@ -15,18 +15,21 @@ public class Unit {
     private final int speed;
     private final int position;
     private final int range;
+    private final boolean recruitable;
 
     private final Map<String, Integer> resourcesPerSecond;
     private final Map<String, Integer> costs;
     private final Requirements requirements;
 
-    public Unit(String name, int attack, int defense, int speed, int position, int range, Map<String, Integer> resourcesPerSecond, Map<String, Integer> costs, Requirements requirements) {
+    public Unit(String name, int attack, int defense, int speed, int position, int range, boolean recruitable,
+                Map<String, Integer> resourcesPerSecond, Map<String, Integer> costs, Requirements requirements) {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
         this.position = position;
         this.range = range;
+        this.recruitable = recruitable;
         this.resourcesPerSecond = resourcesPerSecond;
         this.costs = costs;
         this.requirements = requirements;
@@ -66,5 +69,9 @@ public class Unit {
 
     public Requirements getRequirements() {
         return requirements;
+    }
+
+    public boolean isRecruitable() {
+        return recruitable;
     }
 }

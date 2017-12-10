@@ -41,6 +41,7 @@ public class OtherBuildingsParser {
     private Building parseLevel(String[] line) {
         return new Building(
                 line[0],
+                true,
                 ImmutableMap.of(
                         parseInt(line[1]),
                         new BuildingLevel(

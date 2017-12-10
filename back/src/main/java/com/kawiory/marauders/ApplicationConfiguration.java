@@ -1,25 +1,24 @@
 package com.kawiory.marauders;
 
-import com.kawiory.marauders.controllers.RESTController;
 import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Constants;
 import com.kawiory.marauders.game.Game;
-import com.kawiory.marauders.game.engine.GameCommandsQueue;
-import com.kawiory.marauders.game.engine.Operations;
+import com.kawiory.marauders.game.PlayerData;
+import com.kawiory.marauders.game.army.Army;
+import com.kawiory.marauders.game.location.Location;
 import com.kawiory.marauders.initalization.InitializationService;
-import com.kawiory.marauders.player.Player;
+import io.vavr.Tuple;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static com.google.common.collect.Sets.newHashSet;
+import static com.kawiory.marauders.game.location.Location.CITY_TYPE;
 
 /**
  * @author Kacper
@@ -38,15 +37,18 @@ public class ApplicationConfiguration {
     @Bean
     public Blob initialBlob(Constants constants) {
         return new Blob(
-                initialGames(),
+                initialGames(constants),
                 constants
         );
     }
 
     @Bean
-    public Map<String, Game> initialGames() {
+    public Map<String, Game> initialGames(Constants constants) {
         Map<String, Game> games = new HashMap<>();
-        games.put("1", RESTController.getExample());
+        Map<String, PlayerData> initialData = new HashMap<>();
+        initialData.put("Rudy", new PlayerData());
+        initialData.put("Skarbnik", new PlayerData());
+        games.put("1", new Game(initializationService.initializeLocations(constants), initialData));
         return games;
     }
 
@@ -61,15 +63,7 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public Set<Player> initialPlayers() {
-        return newHashSet(
-                new Player("Rudy"),
-                new Player("Null")
-        );
-    }
-
-    @Bean
     public Constants constants() {
-        return initializationService.initializeContants();
+        return initializationService.initializeConstants();
     }
 }

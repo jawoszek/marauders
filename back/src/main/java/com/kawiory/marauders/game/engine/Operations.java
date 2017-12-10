@@ -24,7 +24,7 @@ public class Operations {
         return blob
                 .getGames()
                 .get(gameName)
-                .getCitiesOnMap()
+                .getLocationsOnMap()
                 .get(coordinates)
                 .getOwnerName()
                 .equals(userName);
@@ -33,7 +33,7 @@ public class Operations {
     public boolean containsBuilding(String buildingName, int buildingLevel, String gameName, Tuple coordinates) {
         return blob.getGames()
                 .get(gameName)
-                .getCitiesOnMap()
+                .getLocationsOnMap()
                 .get(coordinates)
                 .getBuildings()
                 .getOrDefault(buildingName, 0) == buildingLevel;
@@ -113,7 +113,7 @@ public class Operations {
                         unitsToCheck ->
                                 blob.getGames()
                                         .get(gameName)
-                                        .getCitiesOnMap()
+                                        .getLocationsOnMap()
                                         .get(coordinates)
                                         .getGarrison()
                                         .getArmies()
@@ -128,7 +128,7 @@ public class Operations {
                 (unit, amount) ->
                         blob.getGames()
                                 .get(gameName)
-                                .getCitiesOnMap()
+                                .getLocationsOnMap()
                                 .get(coordinates)
                                 .getGarrison()
                                 .getArmies()
@@ -141,14 +141,14 @@ public class Operations {
     public boolean placeExists(String gameName, Tuple coordinates) {
         return blob.getGames()
                 .get(gameName)
-                .getCitiesOnMap()
+                .getLocationsOnMap()
                 .containsKey(coordinates);
     }
 
     public void build(String buildingName, int buildingLevel, String gameName, Tuple coordinates) {
         blob.getGames()
                 .get(gameName)
-                .getCitiesOnMap()
+                .getLocationsOnMap()
                 .get(coordinates)
                 .getBuildings()
                 .put(buildingName, buildingLevel);
@@ -160,7 +160,7 @@ public class Operations {
                 (unit, amount) ->
                         blob.getGames()
                                 .get(gameName)
-                                .getCitiesOnMap()
+                                .getLocationsOnMap()
                                 .get(coordinates)
                                 .getGarrison()
                                 .getArmies()

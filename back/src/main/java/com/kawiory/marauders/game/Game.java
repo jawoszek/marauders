@@ -1,9 +1,8 @@
 package com.kawiory.marauders.game;
 
-import com.kawiory.marauders.game.location.City;
+import com.kawiory.marauders.game.location.Location;
 import io.vavr.Tuple;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -11,16 +10,16 @@ import java.util.Map;
  */
 public class Game {
 
-    private final Map<Tuple, City> citiesOnMap;
+    private final Map<Tuple, Location> locationsOnMap;
     private final Map<String, PlayerData> playersData;
 
-    public Game() {
-        citiesOnMap = new HashMap<>();
-        playersData = new HashMap<>();
+    public Game(Map<Tuple, Location> locationsOnMap, Map<String, PlayerData> playersData) {
+        this.locationsOnMap = locationsOnMap;
+        this.playersData = playersData;
     }
 
-    public Map<Tuple, City> getCitiesOnMap() {
-        return citiesOnMap;
+    public Map<Tuple, Location> getLocationsOnMap() {
+        return locationsOnMap;
     }
 
     public Map<String, PlayerData> getPlayersData() {

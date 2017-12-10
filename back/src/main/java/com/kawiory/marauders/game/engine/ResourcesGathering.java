@@ -3,7 +3,7 @@ package com.kawiory.marauders.game.engine;
 import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Game;
 import com.kawiory.marauders.game.PlayerData;
-import com.kawiory.marauders.game.location.City;
+import com.kawiory.marauders.game.location.Location;
 
 /**
  * @author Kacper
@@ -25,19 +25,19 @@ public class ResourcesGathering implements Runnable {
     }
 
     private void resourceGatheringForGame(Game game) {
-        game.getCitiesOnMap()
+        game.getLocationsOnMap()
                 .values()
                 .forEach(
-                        city -> resourceGatheringForCity(city, game)
+                        location -> resourceGatheringForCity(location, game)
                 );
     }
 
-    private void resourceGatheringForCity(City city, Game game) {
-        if (city.getOwnerName() == null) {
+    private void resourceGatheringForCity(Location location, Game game) {
+        if (location.getOwnerName() == null) {
             return;
         }
 
-        city.getBuildings()
+        location.getBuildings()
                 .forEach(
                         (building, level) ->
                                 resourceGatheringForBuilding(
@@ -45,11 +45,14 @@ public class ResourcesGathering implements Runnable {
                                         level,
                                         game.getPlayersData()
                                                 .get(
-                                                        city.getOwnerName()))
+                                                        location.getOwnerName()))
                 );
     }
 
     private void resourceGatheringForBuilding(String buildingName, Integer level, PlayerData playerData) {
+        if (level < 1) {
+            return;
+        }
         blob.getConstants()
                 .getBuildings()
                 .get(buildingName)

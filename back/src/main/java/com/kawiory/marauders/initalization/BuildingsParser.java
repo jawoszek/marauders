@@ -33,6 +33,11 @@ public class BuildingsParser {
                 .map(
                         levels -> new Building(
                                 levels.getKey(),
+                                levels.getValue()
+                                        .stream()
+                                        .map(Building::isCityBuilding)
+                                        .findAny()
+                                        .orElse(false),
                                 levels
                                         .getValue()
                                         .stream()

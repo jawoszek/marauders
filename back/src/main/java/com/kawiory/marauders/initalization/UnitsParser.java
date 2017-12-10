@@ -51,6 +51,7 @@ public class UnitsParser {
                 stats.get(2),
                 stats.get(3),
                 stats.get(4),
+                true,
                 pairsParser.parse(line[3]),
                 pairsParser.parse(line[2]),
                 parseRequirements(line)
