@@ -175,7 +175,7 @@ public class Operations {
         return hasResources(costs, userName, gameName) &&
                 units.keySet()
                         .stream()
-                        .allMatch(unit -> unitMeetRequirement(unit, userName, gameName, coordinates));
+                        .allMatch(unit -> unitMeetRequirement(unit, gameName, coordinates));
     }
 
     public Map<String, Integer> getUnitsCosts(Map<String, Integer> units) {
@@ -205,7 +205,7 @@ public class Operations {
                 );
     }
 
-    public boolean unitMeetRequirement(String unitName, String userName, String gameName, Tuple coordinates) {
+    public boolean unitMeetRequirement(String unitName, String gameName, Tuple coordinates) {
         return blob
                 .getConstants()
                 .getUnits()

@@ -12,6 +12,8 @@ var cityAscii;
 var buildingInProcess;
 var currentGameState;
 var stompClient;
+var currentArmyToSend;
+
 var buildingSites = {
     "Farm": {x: 39, y: 3},
     "City Hall": {x: 30, y: 6},
@@ -36,7 +38,9 @@ function connect() {
 function refresh(frame, message) {
     playerID = frame.headers['user-name'];
     currentGameState = JSON.parse(message.body);
-    refreshTargets.forEach(Function.prototype.call, Function.prototype.call);
+    refreshTargets.forEach(function(target){
+        target();
+    });
 }
 
 function renderWorldMap() {
@@ -58,6 +62,41 @@ function renderWorldMap() {
     renderedObjects["world"] = worldObj;
     renderedObjects["cityOnMap1"] = cityObjOnMap1;
     renderedObjects["cityOnMap2"] = cityObjOnMap2;
+}
+
+function renderWorldTargetMap(){
+    resetViews();
+
+    cloud1 = new AsciiObj(cloudBig, 1, 2, 10, new AsciiObjProps("cloud1", "hiCloud"));
+    cloud2 = new AsciiObj(cloudMed, 25, 2, 10, new AsciiObjProps("cloud2", "hiCloud"));
+    cloud3 = new AsciiObj(cloudSmall1, 45, 1, 10, new AsciiObjProps("cloud3", "hiCloud"));
+    cityAscii = new AsciiObj(city1, 0, 0, 0, null);
+    var worldObj = new AsciiObj(world, 0, 0, 1, null);
+    var cityObjOnMap1 = new AsciiObj(cityOnMap, 95, 18, 2, new AsciiObjProps("(2, 5)", "setArmyDestination"));
+    var cityObjOnMap2 = new AsciiObj(cityOnMap2, 11, 15, 2, new AsciiObjProps("(4, 3)", "setArmyDestination"));
+    background = backgroundHuge;
+    clouds = [cloud1, cloud2, cloud3];
+    renderedObjects["world"] = worldObj;
+    renderedObjects["cityOnMap1"] = cityObjOnMap1;
+    renderedObjects["cityOnMap2"] = cityObjOnMap2;
+}
+
+function setArmyDestination(coordinates){
+    currentArmyToSend["targetCoordinates"] = coordinates;
+    moveArmy(currentArmyToSend);
+}
+
+function moveArmy(parameters){
+    stompClient.send("/marauders/commands/move", {},
+        JSON.stringify(
+            {
+                "sourceCoordinates": parameters["sourceCoordinates"],
+                "targetCoordinates": parameters["targetCoordinates"],
+                "armyToSend": parameters["armyToSend"],
+                "gameName": parameters["gameName"]
+            })
+    );
+    goToCity(currentCityCoords);
 }
 
 function hiCloud(id) {
@@ -113,15 +152,41 @@ function renderGarrison() {
     renderedObjects["militaryForm"] = new AsciiObj(militaryForm, 3, 24, 15, null);
 }
 
-function build(buildingId) {
+function buildingPanel(buildingId){
     var buildingInfo = currentGameState.constants.buildings[buildingId];
     if (!buildingInfo) {
         console.log("wrong buildingID: " + buildingId);
         return;
     }
     var city = getCity(currentGameState, currentCityCoords);
-    var buildingLvl = city.buildings[buildingId];
-    if (!buildingLvl) buildingLvl = 0;
+    var buildingLvl = city.buildings[buildingId] || 0;
+    var resourcesPerSecond = (buildingInfo.levels[buildingLvl] || {}).resourcesPerSecond || {};
+    var buildingInfoText = generateBuildForm(
+        resourcesPerSecond.Food || 0,
+        resourcesPerSecond.Wood || 0,
+        resourcesPerSecond.Stone || 0,
+        resourcesPerSecond.Gold || 0
+    );
+    renderedObjects["buildingInfo"] = new AsciiObj(buildingInfoText, 37, city1.length, 10, null);
+    var panelLabel = buildingId + " - income per second:";
+    renderedObjects["panelLabel"] = new AsciiObj([panelLabel], 38, 19, 15, null);
+
+    var YESprops = new AsciiObjProps(buildingId, "build");
+    var NOprops = new AsciiObjProps(currentCityCoords, "goToCity");
+    renderedObjects["YESbutton"] = new AsciiObj(["YES"], 49, 25, 15, YESprops);
+    renderedObjects["NObutton"] = new AsciiObj(["NO"], 55, 25, 15, NOprops);
+}
+
+function build(buildingId) {
+    goToCity(currentCityCoords);
+
+    var buildingInfo = currentGameState.constants.buildings[buildingId];
+    if (!buildingInfo) {
+        console.log("wrong buildingID: " + buildingId);
+        return;
+    }
+    var city = getCity(currentGameState, currentCityCoords);
+    var buildingLvl = city.buildings[buildingId] || 0;
     var costs = buildingInfo.levels[String(buildingLvl + 1)].costs;
     var buildFormText = generateBuildForm(costs.Food, costs.Wood, costs.Stone, costs.Gold);
     renderedObjects["buildForm"] = new AsciiObj(buildFormText, 37, city1.length, 10, null);
@@ -141,10 +206,7 @@ function build(buildingId) {
 }
 
 function doBuild(decision) {
-    delete renderedObjects["NObutton"];
-    delete renderedObjects["YESbutton"];
-    delete renderedObjects["buildMessage"];
-    delete renderedObjects["buildForm"];
+    goToCity(currentCityCoords);
     if (decision == "NO") return;
     console.log(buildingInProcess.name);
     console.log(buildingInProcess.level);
@@ -158,6 +220,7 @@ function doBuild(decision) {
                 "gameName": "1"
             })
     );
+
 }
 
 function doRecruit(unit) {
@@ -204,10 +267,10 @@ function renderBuildings() {
         var buildingText = getBuildingText(buildingId);
         if (!buildingText) continue;
         if (buildingLvl) {
-            props = new AsciiObjProps(buildingId, "build");
+            props = new AsciiObjProps(buildingId, "buildingPanel");
             renderedObjects[buildingId] = new AsciiObj(buildingText, buildingSiteUsed.x, buildingSiteUsed.y, 10, props);
         } else {
-            props = new AsciiObjProps(buildingId, "build");
+            props = new AsciiObjProps(buildingId, "buildingPanel");
             renderedObjects[buildingId] = new AsciiObj(buildButton, buildingSiteUsed.x, buildingSiteUsed.y, 10, props);
         }
     }
@@ -226,6 +289,14 @@ function renderMilitaryPanel() {
     var backButtonProps = new AsciiObjProps(currentCityCoords, "goToCity");
     renderedObjects = {};
     renderedObjects["backButton"] = new AsciiObj(backButton, 0, 18, 15, backButtonProps);
+
+    var parameters = {};
+    parameters["sourceCoordinates"] = currentCityCoords;
+    parameters["armyToSend"] = {"Levy":1};
+    parameters["gameName"] = 1;
+    currentArmyToSend = parameters;
+    var sendButton = new AsciiObjProps("", "renderWorldTargetMap");
+    renderedObjects["targetMapButton"] = new AsciiObj(["SEND 1 LEVY"], 20, 14, 15, sendButton);
 }
 
 function fillMilitaryPanel() {
