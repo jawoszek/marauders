@@ -23,9 +23,7 @@ var buildingSites = {
 };
 
 function connect() {
-    console.log("wut1");
     stompClient.connect('', '', function (frame) {
-        console.log("wut2");
         stompClient.subscribe('/user/queue/blob', function (message) {
             refresh(frame, message)
         });
@@ -49,16 +47,11 @@ function renderWorldMap() {
     refreshTargets.push(renderResources);
 
     currentGameState = gameStateMock;
-    console.log(currentGameState);
-    cloud1 = new AsciiObj(cloudBig, 1, 2, 10, new AsciiObjProps("cloud1", "hiCloud"));
-    cloud2 = new AsciiObj(cloudMed, 25, 2, 10, new AsciiObjProps("cloud2", "hiCloud"));
-    cloud3 = new AsciiObj(cloudSmall1, 45, 1, 10, new AsciiObjProps("cloud3", "hiCloud"));
     cityAscii = new AsciiObj(city1, 0, 0, 0, null);
     var worldObj = new AsciiObj(world, 0, 0, 1, null);
     var cityObjOnMap1 = new AsciiObj(cityOnMap, 95, 18, 2, new AsciiObjProps("(2, 5)", "goToCity"));
     var cityObjOnMap2 = new AsciiObj(cityOnMap2, 11, 15, 2, new AsciiObjProps("(4, 3)", "goToCity"));
     background = backgroundHuge;
-    clouds = [cloud1, cloud2, cloud3];
     renderedObjects["world"] = worldObj;
     renderedObjects["cityOnMap1"] = cityObjOnMap1;
     renderedObjects["cityOnMap2"] = cityObjOnMap2;
@@ -83,20 +76,7 @@ function renderWorldTargetMap(){
 
 function setArmyDestination(coordinates){
     currentArmyToSend["targetCoordinates"] = coordinates;
-    moveArmy(currentArmyToSend);
-}
-
-function moveArmy(parameters){
-    stompClient.send("/marauders/commands/move", {},
-        JSON.stringify(
-            {
-                "sourceCoordinates": parameters["sourceCoordinates"],
-                "targetCoordinates": parameters["targetCoordinates"],
-                "armyToSend": parameters["armyToSend"],
-                "gameName": parameters["gameName"]
-            })
-    );
-    goToCity(currentCityCoords);
+    moveArmyCommand(currentArmyToSend);
 }
 
 function hiCloud(id) {
@@ -206,35 +186,12 @@ function build(buildingId) {
 }
 
 function doBuild(decision) {
-    goToCity(currentCityCoords);
     if (decision == "NO") return;
-    console.log(buildingInProcess.name);
-    console.log(buildingInProcess.level);
-    console.log(currentCityCoords);
-    stompClient.send("/marauders/commands/build", {},
-        JSON.stringify(
-            {
-                "buildingName": String(buildingInProcess.name),
-                "buildingLevel": String(buildingInProcess.level),
-                "cityCoordinates": currentCityCoords,
-                "gameName": "1"
-            })
-    );
-
+    sendBuildCommand(currentCityCoords,buildingInProcess);
 }
 
 function doRecruit(unit) {
-    var armyToRecruit = {};
-    armyToRecruit[unit] = 1;
-
-    stompClient.send("/marauders/commands/recruit", {},
-        JSON.stringify(
-            {
-                "armyToRecruit": armyToRecruit,
-                "cityCoordinates": currentCityCoords,
-                "gameName": "1"
-            })
-    );
+    sendRecruitCommand(unit,currentCityCoords);
 }
 
 function main() {
@@ -248,6 +205,10 @@ function main() {
 setTimeout(function () {
     var socket = new SockJS('http://localhost:8080/game');
     stompClient = Stomp.over(socket);
+    cloud1 = new AsciiObj(cloudBig, 1, 2, 10, new AsciiObjProps("cloud1", "hiCloud"));
+    cloud2 = new AsciiObj(cloudMed, 25, 2, 10, new AsciiObjProps("cloud2", "hiCloud"));
+    cloud3 = new AsciiObj(cloudSmall1, 45, 1, 10, new AsciiObjProps("cloud3", "hiCloud"));
+    clouds = [cloud1, cloud2, cloud3];
     mainLoop();
 }, 1000);
 
@@ -290,11 +251,10 @@ function renderMilitaryPanel() {
     renderedObjects = {};
     renderedObjects["backButton"] = new AsciiObj(backButton, 0, 18, 15, backButtonProps);
 
-    var parameters = {};
-    parameters["sourceCoordinates"] = currentCityCoords;
-    parameters["armyToSend"] = {"Levy":1};
-    parameters["gameName"] = 1;
-    currentArmyToSend = parameters;
+    currentArmyToSend = {};
+    currentArmyToSend["sourceCoordinates"] = currentCityCoords;
+    currentArmyToSend["armyToSend"] = {"Levy":1};
+    currentArmyToSend["gameName"] = 1;
     var sendButton = new AsciiObjProps("", "renderWorldTargetMap");
     renderedObjects["targetMapButton"] = new AsciiObj(["SEND 1 LEVY"], 20, 14, 15, sendButton);
 }
