@@ -1,8 +1,11 @@
 package com.kawiory.marauders.game.location;
 
-import com.kawiory.marauders.game.army.Garrison;
+import com.kawiory.marauders.game.army.BattleResult;
+import com.kawiory.marauders.game.army.AlliedArmies;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,12 +19,14 @@ public class Location {
     private String ownerName;
     private final String type;
     private final Map<String, Integer> buildings;
-    private final Garrison garrison;
+    private final Map<String, AlliedArmies> alliedArmies;
+    private final List<BattleResult> battleResults;
 
     public Location(String type, Map<String, Integer> buildings) {
         this.type = type;
         this.buildings = buildings;
-        this.garrison = new Garrison();
+        this.alliedArmies = new HashMap<>();
+        this.battleResults = new ArrayList<>();
     }
 
     public Map<String, Integer> getBuildings() {
@@ -36,11 +41,15 @@ public class Location {
         this.ownerName = ownerName;
     }
 
-    public Garrison getGarrison() {
-        return garrison;
+    public Map<String, AlliedArmies> getAlliedArmies() {
+        return alliedArmies;
     }
 
     public String getType() {
         return type;
+    }
+
+    public List<BattleResult> getBattleResults() {
+        return battleResults;
     }
 }

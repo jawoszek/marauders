@@ -11,4 +11,7 @@ import java.util.Map;
 @Service
 public class BattleLogic {
 
+    public Map<String, AlliedArmies> battle(Map<String, AlliedArmies> initialAlliedArmies) {
+        return initialAlliedArmies;
+    }
 }

@@ -1,13 +1,11 @@
 package com.kawiory.marauders;
 
+import com.google.common.collect.ImmutableList;
 import com.kawiory.marauders.game.Blob;
 import com.kawiory.marauders.game.Constants;
 import com.kawiory.marauders.game.Game;
 import com.kawiory.marauders.game.PlayerData;
-import com.kawiory.marauders.game.army.Army;
-import com.kawiory.marauders.game.location.Location;
 import com.kawiory.marauders.initalization.InitializationService;
-import io.vavr.Tuple;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,8 +15,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import static com.kawiory.marauders.game.location.Location.CITY_TYPE;
 
 /**
  * @author Kacper
@@ -46,9 +42,17 @@ public class ApplicationConfiguration {
     public Map<String, Game> initialGames(Constants constants) {
         Map<String, Game> games = new HashMap<>();
         Map<String, PlayerData> initialData = new HashMap<>();
-        initialData.put("Rudy", new PlayerData());
-        initialData.put("Skarbnik", new PlayerData());
-        games.put("1", new Game(initializationService.initializeLocations(constants), initialData));
+        initialData.put("Rudy", new PlayerData(false, "Palestine"));
+        initialData.put("Skarbnik", new PlayerData(false, "Palestine"));
+        initialData.put("Horde", new PlayerData(true, "Israel"));
+        games.put(
+                "1",
+                new Game(
+                        initializationService.initializeLocations(constants),
+                        initialData,
+                        ImmutableList.of("Palestine", "Israel")
+                )
+        );
         return games;
     }
 

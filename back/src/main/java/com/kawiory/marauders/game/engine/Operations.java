@@ -1,9 +1,16 @@
 package com.kawiory.marauders.game.engine;
 
 import com.kawiory.marauders.game.Blob;
+import com.kawiory.marauders.game.Copiable;
+import com.kawiory.marauders.game.Game;
+import com.kawiory.marauders.game.army.AlliedArmies;
+import com.kawiory.marauders.game.army.BattleLogic;
+import com.kawiory.marauders.game.army.BattleResult;
+import com.kawiory.marauders.game.location.Location;
 import io.vavr.Tuple;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,9 +22,11 @@ import java.util.stream.Collectors;
 public class Operations {
 
     private final Blob blob;
+    private final BattleLogic battleLogic;
 
-    public Operations(Blob blob) {
+    public Operations(Blob blob, BattleLogic battleLogic) {
         this.blob = blob;
+        this.battleLogic = battleLogic;
     }
 
     public boolean isOwner(String userName, String gameName, Tuple coordinates) {
@@ -114,7 +123,8 @@ public class Operations {
                                         .get(gameName)
                                         .getLocationsOnMap()
                                         .get(coordinates)
-                                        .getGarrison()
+                                        .getAlliedArmies()
+                                        .get(getPlayerAlliance(gameName, userName))
                                         .getArmies()
                                         .get(userName)
                                         .getUnits()
@@ -129,7 +139,8 @@ public class Operations {
                                 .get(gameName)
                                 .getLocationsOnMap()
                                 .get(coordinates)
-                                .getGarrison()
+                                .getAlliedArmies()
+                                .get(getPlayerAlliance(gameName, userName))
                                 .getArmies()
                                 .get(userName)
                                 .getUnits()
@@ -155,18 +166,53 @@ public class Operations {
 
     public void addArmy(Map<String, Integer> units, String userName, String gameName, Tuple coordinates,
                         Tuple sourceCoordinates) {
+        Game game = blob
+                .getGames()
+                .get(gameName);
+
         units.forEach(
                 (unit, amount) ->
-                        blob.getGames()
+                        blob
+                                .getGames()
                                 .get(gameName)
                                 .getLocationsOnMap()
                                 .get(coordinates)
-                                .getGarrison()
+                                .getAlliedArmies()
+                                .get(getPlayerAlliance(gameName, userName))
                                 .getArmies()
                                 .get(userName)
                                 .getUnits()
                                 .merge(unit, amount, (current, toAdd) -> current + toAdd)
         );
+
+        if (enemiesMetInLocation(gameName, coordinates)) {
+            battle(gameName, coordinates);
+        }
+    }
+
+    private boolean enemiesMetInLocation(String gameName, Tuple coordinates) {
+        Game game = blob
+                .getGames()
+                .get(gameName);
+
+        return game
+                .getLocationsOnMap()
+                .get(coordinates)
+                .getAlliedArmies()
+                .size() > 1;
+    }
+
+    private void battle(String gameName, Tuple coordinates) {
+        Location location = blob
+                .getGames()
+                .get(gameName)
+                .getLocationsOnMap()
+                .get(coordinates);
+
+        Map<String, AlliedArmies> initialAlliedArmies = Copiable.copy(location.getAlliedArmies());
+        Map<String, AlliedArmies> finalAlliedArmies = Copiable.copy(initialAlliedArmies);
+
+        location.getBattleResults().add(new BattleResult(LocalDateTime.now(), initialAlliedArmies, finalAlliedArmies));
     }
 
     public boolean canRecruit(Map<String, Integer> units, String userName, String gameName, Tuple coordinates) {
@@ -222,6 +268,15 @@ public class Operations {
                                         gameName,
                                         coordinates)
                 );
+    }
+
+    private String getPlayerAlliance(String gameName, String playerName) {
+        return blob
+                .getGames()
+                .get(gameName)
+                .getPlayersData()
+                .get(playerName)
+                .getAlliance();
     }
 
 
