@@ -18,13 +18,19 @@ var build_form=[
 var garrisonTab=[
     "/===============================\\",
     "|         GARRISON              |",
-    "|             :              [R]|",
+    "|             :                 |",
     "\\===============================/"];
 
 var militaryTab=[
     "/===============================\\",
-    "|           UNITS               |",
+    "|         YOUR UNITS            |",
     "|             :              [R]|",
+    "\\===============================/"];
+
+var militaryToSendTab=[
+    "/===============================\\",
+    "|       UNITS TO SEND           |",
+    "|             :                 |",
     "\\===============================/"];
 var xResourceOfset =7;
 function showText(text){
@@ -72,15 +78,34 @@ function generateBuildForm(food,wood,stone,gold){
     return res;
 }
 
-function generateGarrisonForm(){
-    var res = new Array(garrisonTab.length)
+function generateGarrisonForm(units){
+    var garrison = new Array(garrisonTab.length);
     for(var i=0 ; i<garrisonTab.length ; i++)
-        res[i] = garrisonTab[i];
+        garrison[i] = garrisonTab[i];
+    for (unit in units) {
+        var numOfUnit = units[unit];
+        var strNum = String(numOfUnit);
+        garrison.splice(3, 0, garrison[2]);
+        garrison[3] = garrison[2].slice(0, 2)
+            + unit
+            + garrison[2].slice(2 + unit.length, 15)
+            + strNum
+            + garrison[2].slice(15 + strNum.length, garrison[2].length);
+    }
+    garrison.splice(2, 1);
+    return garrison;
+}
+
+function generateUnitsToSendForm(){
+    var res = new Array(militaryToSendTab.length);
+    for(var i=0 ; i<militaryToSendTab.length ; i++)
+        res[i] = militaryToSendTab[i];
     return res;
 }
 
+
 function generateMilitaryForm(){
-    var res = new Array(militaryTab.length)
+    var res = new Array(militaryTab.length);
     for(var i=0 ; i<militaryTab.length ; i++)
         res[i] = militaryTab[i];
     return res;

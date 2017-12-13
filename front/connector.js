@@ -17,6 +17,8 @@ function sendRecruitCommand(unit,coords){
     var armyToRecruit = {};
     armyToRecruit[unit] = 1;
 
+    console.log(armyToRecruit);
+    console.log(coords);
     stompClient.send("/marauders/commands/recruit", {},
         JSON.stringify(
             {
@@ -28,6 +30,7 @@ function sendRecruitCommand(unit,coords){
 }
 
 function moveArmyCommand(armyInfo){
+    console.log(armyInfo);
     stompClient.send("/marauders/commands/move", {},
         JSON.stringify(
             {
@@ -37,5 +40,4 @@ function moveArmyCommand(armyInfo){
                 "gameName": armyInfo["gameName"]
             })
     );
-    goToCity(currentCityCoords);
 }
